@@ -3,4 +3,5 @@ import(ChemmineR)
 
 
 export("buildDud","buildDrugBank")
+export("DUD","DrugBank")
 

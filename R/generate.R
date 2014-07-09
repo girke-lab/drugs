@@ -48,3 +48,12 @@ buildDrugBank <- function(dbName,downloadDir){
 	conn = initDb(dbName)
 	loadSdf(conn,file.path(downloadDir,"all.sdf"),fct=standardFeatures)
 }
+DUD <- function(){
+	getDbConn("dud.db")
+}
+DrugBank <- function(){
+	getDbConn("drugbank.db")
+}
+getDbConn <- function(dbName) {
+	initDb(system.file(file.path("extdata",dbName),package="ChemmineRdata",mustWork=TRUE))
+}
