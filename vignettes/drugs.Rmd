@@ -69,7 +69,7 @@ The DUD database additionally includes:
 Searching
 =========
 
-Search is done with the *findCompounds* function from the *ChemmineR* package. 
+Searching is done with the *findCompounds* function from the *ChemmineR* package. 
 This function takes a connection to the desired database, a list of features you intend
 to use in the tests and then a list of tests to use. It returns a list of compound id numbers. These are not
 related to the names of the compounds in any way however, they are relevent only in the context of this database 
@@ -81,7 +81,7 @@ First create a connection to the desired database:
 dudConn = DUD()
 ```
 
-The tests parameter is just a list of expressions like "FEATURE-NAME OPERATOR VALUE". For example,
+The *tests* parameter is just a list of expressions like "FEATURE-NAME OPERATOR VALUE". For example,
 if you want to find things with molecular weight less than 200 your test would look like "mw < 200".
 For those who know SQL, any valid SQL expression can be used here. 
 
@@ -118,6 +118,11 @@ Valid comparison operators are:
 
 The boolean operators "AND" and "OR" can also be used to create more complex expressions within a single test.
 
+If you just want to fetch every compound in the database you can use the *getAllCompoundIds* function:
+```{r }
+allIds = getAllCompoundIds(dudConn)
+message("found ",length(allIds))
+```
 
 Using Search Results
 =====================
@@ -142,6 +147,18 @@ sdfset = getCompounds(dudConn,results,keepOrder=TRUE)
 sdfset = getCompounds(dudConn,results,filename=file.path(tempdir(),"results.sdf"))
 ```
 
+Using the *getCompoundFeatures* function, you can get a set of feature values 
+as a data frame:
+```{r}
+getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"))
+
+#write results directly to a CSV file (reduces memory usage):
+getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"),filename="features.csv")
+
+#maintain input order in output:
+print(results[1:5])
+getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"),keepOrder=TRUE)
+```
 
 
 

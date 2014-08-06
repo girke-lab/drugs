@@ -1,4 +1,4 @@
-PKG_NAME=ChemmineRdata
+PKG_NAME=drugs
 
 all:
 
