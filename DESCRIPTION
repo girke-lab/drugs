@@ -1,7 +1,7 @@
 Package: drugs
 Type: Package
 Title: DrugBank and DUD data sets
-Version: 0.99.0
+Version: 0.99.1
 Date: 2014-8-6
 Author: Kevin Horan
 Maintainer: Kevin Horan <khoran@cs.ucr.edu>

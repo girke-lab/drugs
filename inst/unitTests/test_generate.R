@@ -1,5 +1,5 @@
 
-library(ChemmineRdata)
+library(drugs)
 
 
 targetFeatures = sort(c(

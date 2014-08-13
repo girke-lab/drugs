@@ -1,14 +1,14 @@
-% ChemmineRdata
+% Drugs 
 % Kevin Horan & Thomas Girke
 % `r format(Sys.time(),"%B %d, %Y")`
 <!--
 \usepackage[utf8]{inputenc}
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{ChemmineRdata}
+%\VignetteIndexEntry{drugs}
 -->
 
 ```{r echo=FALSE, results='hide',message=FALSE,warning=FALSE,error=FALSE}
-library(ChemmineRdata) 
+library(drugs) 
 library(knitcitations)
 library(RSQLite)
 ```
