@@ -2,9 +2,10 @@
 import(ChemmineR)
 import(methods)
 import(BiocGenerics)
+import(RSQLite)
 
 
 
-export("buildDud","buildDrugBank")
+export("buildDud","buildDrugBank","buildDude")
 export("DUD","DrugBank")
 

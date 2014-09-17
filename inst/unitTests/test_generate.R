@@ -27,6 +27,32 @@ test.buildDud <- function(){
 
 
 }
+test.buildDude <- function(){
+	DEACTIVATED("off")
+
+	message("building DUDE database")
+	ids=buildDude("inst/extdata/dud.db","dataSrc/dud")
+	message("loaded ",length(ids)," compounds")
+
+	checkTrue(file.exists("dataSrc/dud/all.tar.gz"))
+	checkTrue(file.exists("dataSrc/dud/all/ace/actives_final.sdf.gz"))
+	checkTrue(file.exists("dataSrc/dud/all/plk1/decoys_final.sdf.gz"))
+	checkTrue(file.exists("inst/extdata/dud.db"))
+
+	
+	# this will only succeed on a clean load
+	#checkEquals(length(ids),1449671)
+	#1454636 file
+	#1449671 db
+
+	conn = initDb("inst/extdata/dud.db")
+	allIds = getAllCompoundIds(conn)
+	message("found ",length(allIds)," compounds")
+	checkEquals(length(allIds),1449670)
+
+
+}
+
 test.buildDrugBank <- function(){
 	DEACTIVATED("off")
 
@@ -41,11 +67,13 @@ test.buildDrugBank <- function(){
 
 }
 test.zzDudFeatures<- function(){
+	#DEACTIVATED("off")
 	features = listFeatures(DUD())
 	print(features)
 	checkEquals(sort(features),sort(c(targetFeatures,"type","target_name")))
 }
 test.zzDrugBankFeatures<- function(){
+	#DEACTIVATED("off")
 	features = listFeatures(DrugBank())
 	print(features)
 	checkEquals(sort(features),targetFeatures)
