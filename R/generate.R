@@ -123,5 +123,5 @@ DrugBank <- function(){
 	getDbConn("drugbank.db")
 }
 getDbConn <- function(dbName) {
-	initDb(system.file(file.path("extdata",dbName),package="drugs",mustWork=TRUE))
+	initDb(system.file(file.path("extdata",dbName),package="ChemmineDrugs",mustWork=TRUE))
 }

@@ -1,5 +1,5 @@
 
-library(drugs)
+library(ChemmineDrugs)
 
 
 targetFeatures = sort(c(
@@ -14,7 +14,7 @@ test.buildDud <- function(){
 	DEACTIVATED("off")
 
 	message("building DUD database")
-	ids=buildDud("inst/extdata/dud.db","dataSrc/dud")
+	ids=ChemmineDrugs:::buildDud("inst/extdata/dud.db","dataSrc/dud")
 	message("loaded ",length(ids)," compounds")
 
 	checkTrue(file.exists("dataSrc/dud/DUD_LIB_VS_1.0.tar.gz"))
@@ -31,7 +31,7 @@ test.buildDude <- function(){
 	DEACTIVATED("off")
 
 	message("building DUDE database")
-	ids=buildDude("inst/extdata/dud.db","dataSrc/dud")
+	ids=ChemmineDrugs:::buildDude("inst/extdata/dud.db","dataSrc/dud")
 	message("loaded ",length(ids)," compounds")
 
 	checkTrue(file.exists("dataSrc/dud/all.tar.gz"))
@@ -57,7 +57,7 @@ test.buildDrugBank <- function(){
 	DEACTIVATED("off")
 
 	message("building Drug Bank database")
-	ids = buildDrugBank("inst/extdata/drugbank.db","dataSrc/drugbank")
+	ids = ChemmineDrugs:::buildDrugBank("inst/extdata/drugbank.db","dataSrc/drugbank")
 	message("loaded ",length(ids)," compounds")
 
 	checkTrue(file.exists("dataSrc/drugbank/all.sdf"))

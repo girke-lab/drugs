@@ -1,14 +1,14 @@
-% Drugs 
+% ChemmineDrugs
 % Kevin Horan & Thomas Girke
 % `r format(Sys.time(),"%B %d, %Y")`
 <!--
 \usepackage[utf8]{inputenc}
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{drugs}
+%\VignetteIndexEntry{ChemmineDrugs}
 -->
 
 ```{r echo=FALSE, results='hide',message=FALSE,warning=FALSE,error=FALSE}
-library(drugs) 
+library(ChemmineDrugs) 
 library(knitcitations)
 library(RSQLite)
 ```
@@ -22,8 +22,8 @@ compound. This allows one to quickly search for compounds by any of these featur
 or just to see the value of the features without having to compute them each
 time.  These datasets can be used with tthe tools provided by *ChemmineR*.
 
-The DUD dataset was downloaded from [here](http://dud.docking.org/jahn/DUD\_LIB\_VS\_1.0.tar.gz). A description
-can be found [here](http://dud.docking.org/jahn/Readme.pdf). 
+The DUD dataset was downloaded from [here](http://dude.docking.org/db/subsets/all/all.tar.gz). A description
+can be found [here](http://dude.docking.org/). 
 
 The Drug Bank data set is version 4.1. It can be downloaded [here](http://www.drugbank.ca/system/downloads/current/structures/all.sdf.zip)
 
@@ -78,7 +78,7 @@ and may even change from one release to another.
 First create a connection to the desired database:
 
 ```{r }
-dudConn = DUD()
+drugbankConn = DrugBank()
 ```
 
 The *tests* parameter is just a list of expressions like "FEATURE-NAME OPERATOR VALUE". For example,
@@ -87,14 +87,14 @@ For those who know SQL, any valid SQL expression can be used here.
 
 
 ```{r }
-results = findCompounds(dudConn,"mw",c("mw < 200"))
+results = findCompounds(drugbankConn,"mw",c("mw < 200"))
 message("found ",length(results))
 ```
 
 If more than one test is given, only compounds which satisify all tests are found. So if we wanted
 to further restrict our search to compounds with 2 or more aromatic rings we could do:
 ```{r }
-results = findCompounds(dudConn,c("mw","aromatic"),c("mw < 200","aromatic >= 2"))
+results = findCompounds(drugbankConn,c("mw","aromatic"),c("mw < 200","aromatic >= 2"))
 message("found ",length(results))
 ```
 
@@ -103,7 +103,7 @@ Remember that any feature used in some test must be listed in the second argumen
 String patterns can also be used. So if we wanted to match a substring of the molecular formula, so 
 to find compounds with 6 carbon atoms, we could do:
 ```{r }
-results = findCompounds(dudConn,"formula",c("formula like '%C6%'"))
+results = findCompounds(drugbankConn,"formula",c("formula like '%C6%'"))
 message("found ",length(results))
 ```
 
@@ -120,7 +120,7 @@ The boolean operators "AND" and "OR" can also be used to create more complex exp
 
 If you just want to fetch every compound in the database you can use the *getAllCompoundIds* function:
 ```{r }
-allIds = getAllCompoundIds(dudConn)
+allIds = getAllCompoundIds(drugbankConn)
 message("found ",length(allIds))
 ```
 
@@ -132,32 +132,32 @@ fetch the compound names, or the whole set of compounds as an SDFset.
 ```{r }
 
 #get the names of the compounds:
-names = getCompoundNames(dudConn,results)
+names = getCompoundNames(drugbankConn,results)
 
 #if the name order is important set keepOrder=TRUE 
 #It will take a little longer though
-names = getCompoundNames(dudConn,results,keepOrder=TRUE) 
+names = getCompoundNames(drugbankConn,results,keepOrder=TRUE) 
 
 
 # get the whole set of compounds
-sdfset = getCompounds(dudConn,results)
+sdfset = getCompounds(drugbankConn,results)
 #in order:
-sdfset = getCompounds(dudConn,results,keepOrder=TRUE)
+sdfset = getCompounds(drugbankConn,results,keepOrder=TRUE)
 #write results directly to a file:
-sdfset = getCompounds(dudConn,results,filename=file.path(tempdir(),"results.sdf"))
+sdfset = getCompounds(drugbankConn,results,filename=file.path(tempdir(),"results.sdf"))
 ```
 
 Using the *getCompoundFeatures* function, you can get a set of feature values 
 as a data frame:
 ```{r}
-getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"))
+getCompoundFeatures(drugbankConn,results[1:5],c("mw","logp","formula"))
 
 #write results directly to a CSV file (reduces memory usage):
-getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"),filename="features.csv")
+getCompoundFeatures(drugbankConn,results[1:5],c("mw","logp","formula"),filename="features.csv")
 
 #maintain input order in output:
 print(results[1:5])
-getCompoundFeatures(dudConn,results[1:5],c("mw","logp","cansmi"),keepOrder=TRUE)
+getCompoundFeatures(drugbankConn,results[1:5],c("mw","logp","formula"),keepOrder=TRUE)
 ```
 
 

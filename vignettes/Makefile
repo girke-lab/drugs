@@ -1,4 +1,4 @@
-PKG_NAME=drugs
+PKG_NAME=ChemmineDrugs
 
 all:
 

@@ -1,1 +1,1 @@
-BiocGenerics:::testPackage("drugs")
+BiocGenerics:::testPackage("ChemmineDrugs")

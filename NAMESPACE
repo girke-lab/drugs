@@ -5,7 +5,3 @@ import(BiocGenerics)
 import(RSQLite)
 
 
-
-export("buildDud","buildDrugBank","buildDude")
-export("DUD","DrugBank")
-
