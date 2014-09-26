@@ -9,7 +9,7 @@ Suggests: BiocStyle,knitcitations,knitr
 Description: A data package for use with ChemmineR. 
 	This package includes data from DrugBank and DUD.
 License: Artistic-2.0
-Depends: R (>= 2.10.0), methods
-Imports:  methods, ChemmineR >= 2.15.15), BiocGenerics,RSQLite
+Depends: R (>= 2.10.0), methods, ChemmineR
+Imports:  methods, ChemmineR (>= 2.15.15), BiocGenerics,RSQLite
 VignetteBuilder: knitr
 biocViews: AnnotationData, CustomDBSchema
