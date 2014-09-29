@@ -1,0 +1,9 @@
+#!/bin/sh
+
+
+DATABASES="drugbank dud"
+
+for db in $DATABASES; do
+ echo unzipping $db.db.gz if it exists
+ [ -e inst/extdata/$db.db.gz ] && gunzip inst/extdata/$db.db.gz
+done

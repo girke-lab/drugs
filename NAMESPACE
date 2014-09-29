@@ -1,6 +1,5 @@
 
 import(ChemmineR)
-import(methods)
 import(BiocGenerics)
 import(RSQLite)
 

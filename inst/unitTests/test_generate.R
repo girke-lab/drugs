@@ -10,23 +10,6 @@ targetFeatures = sort(c(
 	"rnh2","roh", "ropo3","ror","title","tpsa"
 ))
 
-test.buildDud <- function(){
-	DEACTIVATED("off")
-
-	message("building DUD database")
-	ids=ChemmineDrugs:::buildDud("inst/extdata/dud.db","dataSrc/dud")
-	message("loaded ",length(ids)," compounds")
-
-	checkTrue(file.exists("dataSrc/dud/DUD_LIB_VS_1.0.tar.gz"))
-	checkTrue(file.exists("dataSrc/dud/actives/vegfr2_clustered_3D_MM.sdf"))
-	checkTrue(file.exists("dataSrc/dud/decoys/DUD_vegfr2_decoys_ID_pass_MWPass_I_MM.sdf"))
-	checkTrue(file.exists("inst/extdata/dud.db"))
-
-	
-	checkEquals(length(ids),106912)
-
-
-}
 test.buildDude <- function(){
 	DEACTIVATED("off")
 
