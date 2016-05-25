@@ -2,10 +2,8 @@
 debug=TRUE
 #debug=FALSE
 
-#cleaned version 2
-DUD_URL = "http://dud.docking.org/jahn/DUD_LIB_VS_1.0.tar.gz"
 DUDE_URL = "http://dude.docking.org/db/subsets/all/all.tar.gz"
-DrugBank_URL = "http://www.drugbank.ca/system/downloads/current/structures/all.sdf.zip"
+DrugBank_URL = " http://www.drugbank.ca/releases/4-5-0/downloads/all-structures"
 
 ensureDataFrame <- function(x) {
 	if(is.data.frame(x))
@@ -26,34 +24,6 @@ standardFeatures <- function(sdfInput)
 				  ensureDataFrame(rings(sdfInput, upper=6, type="count", arom=TRUE)))
 
 
-buildDud <- function(dbName,downloadDir){
-
-	## Download
-	system(paste("wget -c ",DUD_URL,"  -P ",downloadDir))
-	system(paste("tar xfz ",file.path(downloadDir,"DUD_LIB_VS_1.0.tar.gz")," -C ",downloadDir))
-
-	## Import
-	currentDir= getwd()
-	setwd(downloadDir)
-	dudDF <- data.frame(actives=paste("./actives/", list.files("./actives/", "sdf$"), sep=""), decoys=paste("./decoys/", list.files("./decoys/", "sdf$"), sep=""))
-	row.names(dudDF) <- gsub("^.*actives/|_clustered_.*", "", dudDF[,1])
-	setwd(currentDir)
-
-	conn = initDb(dbName)
-
-	loadDud = function(i,type,label)
-		loadSdf(conn,file.path(downloadDir,dudDF[i,label]),fct=function(sdfset){
-				  data.frame(type=rep(type,length(sdfset)),target_name=rownames(dudDF)[i],standardFeatures(sdfset))
-			})
-
-	compoundIds=c()
-	for(i in seq(along=dudDF[,1])) {
-		compoundIds=c(compoundIds,loadDud(i,"active","actives"))
-		compoundIds=c(compoundIds,loadDud(i,"decoy","decoys"))
-	}
-
-	compoundIds
-}
 buildDude <- function(dbName,downloadDir){
 
 	## Download
@@ -110,11 +80,13 @@ buildDude <- function(dbName,downloadDir){
 buildDrugBank <- function(dbName,downloadDir){
 
 
-	system(paste("wget -c ",DrugBank_URL,"  -P ",downloadDir))
-	system(paste("unzip -d ",downloadDir,file.path(downloadDir,"all.sdf.zip")))
+
+	system(paste("curl -L -o ",downloadDir,
+					 "/structures.sdf.zip -u khoran@cs.ucr.edu:10241024 ",DrugBank_URL,sep=""))
+	system(paste("unzip -d ",downloadDir,file.path(downloadDir,"structures.sdf.zip")))
 
 	conn = initDb(dbName)
-	loadSdf(conn,file.path(downloadDir,"all.sdf"),fct=standardFeatures)
+	loadSdf(conn,file.path(downloadDir,"structures.sdf"),fct=standardFeatures)
 }
 DUD <- function(){
 	getDbConn("dud.db")

@@ -1,4 +1,4 @@
-
+# 7109 7087
 library(ChemmineDrugs)
 
 
@@ -11,7 +11,7 @@ targetFeatures = sort(c(
 ))
 
 test.buildDude <- function(){
-	DEACTIVATED("off")
+	DEACTIVATED("does not work as a test anymore. only here for reference")
 
 	message("building DUDE database")
 	ids=ChemmineDrugs:::buildDude("inst/extdata/dud.db","dataSrc/dud")
@@ -37,7 +37,7 @@ test.buildDude <- function(){
 }
 
 test.buildDrugBank <- function(){
-	DEACTIVATED("off")
+	DEACTIVATED("does not work as a test anymore. only here for reference")
 
 	message("building Drug Bank database")
 	ids = ChemmineDrugs:::buildDrugBank("inst/extdata/drugbank.db","dataSrc/drugbank")
